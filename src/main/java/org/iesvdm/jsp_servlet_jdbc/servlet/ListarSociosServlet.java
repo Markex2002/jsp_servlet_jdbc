@@ -29,5 +29,4 @@ public class ListarSociosServlet extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
-
 }
