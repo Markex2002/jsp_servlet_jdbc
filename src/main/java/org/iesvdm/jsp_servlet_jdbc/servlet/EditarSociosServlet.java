@@ -40,7 +40,7 @@ public class EditarSociosServlet extends HttpServlet {
         //FIJÉMONOS QUE LA RUTA DE LA JSP HA CAMBIADO A DENTRO DE /WEB-INF/
         //POR LO TANTO NO ES ACCESIBLE DIRECTAMENTE, SÓLO A TRAVÉS DE SERVLET
         //MEDIANTE UN RequestDispatcher ----------------v
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/formularioSocioB.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/formularioEditarSocioB.jsp");
 
         //SIEMPRE QUE HACEMOS UN RequestDispatcher DEBE MATERIALIZARSE EN UN forward
         //             --------------------------------------------------------|
@@ -63,7 +63,7 @@ public class EditarSociosServlet extends HttpServlet {
         // SI OK ==> OPTIONAL CON SOCIO                 |
         // SI FAIL ==> EMPTY OPTIONAL                   |
         //                                              V
-        Optional<Socio> optionalSocio = UtilServlet.validaGrabar(request);
+        Optional<Socio> optionalSocio = UtilServlet.validaEDitar(request);
 
         //SI OPTIONAL CON SOCIO PRESENTE <--> VALIDA OK
         if (optionalSocio.isPresent()) {
@@ -72,7 +72,7 @@ public class EditarSociosServlet extends HttpServlet {
             Socio socio = optionalSocio.get();
 
             //PERSITO EL SOCIO NUEVO EN BBDD
-            this.socioDAO.create(socio);
+            this.socioDAO.update(socio);
 
             //CARGO TODO EL LISTADO DE SOCIOS DE BBDD CON EL NUEVO
             List<Socio> listado = this.socioDAO.getAll();
@@ -105,7 +105,7 @@ public class EditarSociosServlet extends HttpServlet {
             //POR ÚLTIMO, REDIRECCIÓN INTERNA PARA LA URL /GrabarSocioServlet A formularioSocio.jsp
             //                                                                      |
             //                                                                      V
-            dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/formularioSocioB.jsp");
+            dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/formularioEditarSocioB.jsp");
         }
 
 
@@ -114,5 +114,4 @@ public class EditarSociosServlet extends HttpServlet {
         dispatcher.forward(request,response);
 
     }
-
 }
